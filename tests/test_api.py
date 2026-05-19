@@ -5,7 +5,7 @@ BASE_URL = "http://localhost:5000"
 
 
 def test_health_endpoint_returns_healthy():
-    "Tests that the api endpoint returns 200 OK"
+    "Tests that the api endpoint returns 200 OK and status is healthy"
     url = f"{BASE_URL}/api/health"
     response = requests.get(url)
     assert response.status_code == 200
@@ -13,7 +13,7 @@ def test_health_endpoint_returns_healthy():
 
 
 def test_register_user_creates_new_user():
-    "Tests that the user is created"
+    "Tests that the user is created successfully"
     url = f"{BASE_URL}/api/auth/register"
     username = f"testuser_{int(time.time() * 1000)}"
     user_data = {"username": username, "password": "testpassword"}
@@ -24,13 +24,13 @@ def test_register_user_creates_new_user():
 
 
 def test_login_returns_jwt_token():
-    "Tests that the jwt token is returned"
+    "Tests that the jwt token is returned after login"
+    url = f"{BASE_URL}/api/auth/register"
+    username = f"testuser_{int(time.time() * 1000)}"
+    user_data = {"username": username, "password": "testpassword"}
+    requests.post(url, json=user_data)
     url = f"{BASE_URL}/api/auth/login"
-    usedata = {
-        "username": "john_doe",
-        "password": "securepassword123"
-    }
-    response = requests.post(url, json=usedata)
+    response = requests.post(url, json=user_data)
     assert response.status_code == 200
     data = response.json()
     assert "access_token" in data
@@ -48,7 +48,7 @@ def register_login_return_token():
 
 
 def test_create_public_event_requires_auth_and_succeeds_with_token():
-    "Create public event with auth"
+    "Tests creation of public event with authorization"
     url = f"{BASE_URL}/api/events"
     test_data = {
         "title": "Python Meetup",
@@ -75,7 +75,7 @@ def test_create_public_event_requires_auth_and_succeeds_with_token():
 
 
 def test_rsvp_to_public_event_succeeds_without_auth():
-    "Create public event without auth"
+    "Tests creation of public event without auth"
     url = f"{BASE_URL}/api/events"
     test_data = {
         "title": "Python Meetup",
@@ -115,7 +115,7 @@ def test_register_user_duplicate():
 
 
 def test_create_public_event_without_token():
-    "Create public event without token"
+    "Tests creation of public event without token"
     url = f"{BASE_URL}/api/events"
     test_data = {
         "title": "Python Meetup",
@@ -131,7 +131,7 @@ def test_create_public_event_without_token():
 
 
 def test_rsvp_to_private_event_fails_without_auth():
-    "Create public event without auth"
+    "Tests creation of public event without auth"
     url = f"{BASE_URL}/api/events"
     test_data = {
         "title": "Python Meetup",
