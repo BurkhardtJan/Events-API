@@ -10,37 +10,37 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    -name: Build docker image
-      run: |
-        docker build -t events-api:latest .
+      - name: Build docker image
+        run: |
+          docker build -t events-api:latest .
 
-    -name: Run docker container
-      run: |
-        docker run -d -p 5000:5000 --name events-api-container events-api:latest
+      - name: Run docker container
+        run: |
+          docker run -d -p 5000:5000 --name events-api-container events-api:latest
 
-    -name: Container health check
-      run: |
-        sleep 5
-        curl 'http://localhost:5000/api/health' || exit 1
+      - name: Container health check
+        run: |
+          sleep 5
+          curl 'http://localhost:5000/api/health' || exit 1
 
-    -name: Set up python
-      uses: action/setup-python@v5
-      with:
-        - python-version: '3.11'
+      - name: Set up python
+        uses: action/setup-python@v5
+        with:
+          - python-version: '3.11'
 
-    -name: Install deps
-      run: |
-        - pip install -r requirements-test.txt
+      - name: Install deps
+        run: |
+          - pip install -r requirements-test.txt
 
-    -name: Run tsts against container
-      run: |
-        pytest -v
-        
+      - name: Run tsts against container
+        run: |
+          pytest -v
+          
 
