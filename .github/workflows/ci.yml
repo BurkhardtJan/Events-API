@@ -31,13 +31,13 @@ jobs:
           curl 'http://localhost:5000/api/health' || exit 1
 
       - name: Set up python
-        uses: action/setup-python@v5
+        uses: actions/setup-python@v5
         with:
-          - python-version: '3.11'
+          python-version: '3.11'
 
       - name: Install deps
         run: |
-          - pip install -r requirements-test.txt
+          pip install -r requirements-test.txt
 
       - name: Run tsts against container
         run: |
