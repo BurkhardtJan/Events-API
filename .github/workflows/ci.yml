@@ -37,7 +37,8 @@ jobs:
 
       - name: Install deps
         run: |
-          pip install -r requirements-test.txt
+          pip install pytest
+          pip install -r requirements.txt
 
       - name: Run tsts against container
         run: |
