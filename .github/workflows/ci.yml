@@ -88,5 +88,3 @@ jobs:
         run: |
           sleep 50
           curl '${{secrets.RENDER_BASE_URL}}/api/health' || exit 1
-
-
