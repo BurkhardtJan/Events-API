@@ -66,7 +66,7 @@ jobs:
       - name: Render health check
         run: |
           sleep 50
-          curl '${{RENDER_BASE_URL}}/api/health' || exit 1
+          curl '${{secrets.RENDER_BASE_URL}}/api/health' || exit 1
 
       - name: Cleanup Docker container
         if: always()
